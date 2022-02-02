@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class RollingDie {
 	public int toss()
 	{
@@ -44,16 +46,16 @@ public class RollingDie {
 //				lastNum = values[i];
 //			}
 //		}
-//		if(bestRun == 0) return -1;
+//		if(bestRun == 1) return -1;
 //		return index;
 //	}
 
 	public int getBestRun(int[] values) {
 
-		int currCount = 0;
-		int bestCount = 0;
-		int currRun = 0;
-		int bestRun = 0;
+		int currCount = 1;
+		int bestCount = 1;
+		int currRun = 1;
+		int bestRun = 1;
 
 		for (int x = 1; x < values.length; x++) {
 
@@ -64,11 +66,16 @@ public class RollingDie {
 					bestCount = currCount;              //Saves length of longest run to compare later.
 					bestRun = currRun;                  //Saves location of best run to print to console.
 				}
-				currCount = 0;                          //Resets count.
+				currCount = 1;                          //Resets count.
 				currRun = x;                            //Sets position to test for new run.
 			}
 		}
-		if (currCount > bestCount) {bestRun = currRun;}  //In the case that the best run is at the end of the array.
+		if (currCount > bestCount) {
+			bestRun = currRun;
+			bestCount = currCount;
+		}  //In the case that the best run is at the end of the array.
+
+		if(bestCount==1) return -1;
 		return bestRun;
 	}
 
@@ -79,19 +86,20 @@ public class RollingDie {
 
 		for (int p = 0; p < 10; p++) {
 			int[] tossArr = nc.getRolls(20);
-			for (int i = 0; i < 20; i++)
-				System.out.print(tossArr[i] + ",");
-			System.out.println();
+
+			System.out.println(Arrays.toString(tossArr));
 
 			int x = nc.getBestRun(tossArr);
 			System.out.println(x);
 		}
-		//int [] myarr = {3,4,5,6,3,3,3,3,3,6,3,2,5,3,2,4,2,4,2,1};
-		int [] myarr = {3,4,5,6,3,2,3,4,3,6,3,2,5,3,2,4,2,4,1,1};
-		for (int i = 0; i < 20; i++)
-			System.out.print(myarr[i] + ",");
-		System.out.println();
+
+		int [] myarr = {3,4,5,6,3,2,3,4,3,6,3,2,5,3,2,4,2,1,1,1};
+		System.out.println(Arrays.toString(myarr));
 		System.out.println(nc.getBestRun(myarr));
+
+		int [] myarr2 = {3,4,5,6,3,2,3,4,3,6,3,2,5,3,2,4,2,4,1,2};
+		System.out.println(Arrays.toString(myarr2));
+		System.out.println(nc.getBestRun(myarr2));
 	}
 
 }

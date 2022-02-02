@@ -23,32 +23,46 @@ public class GradeAverage {
 	// first and last are > 0 and < scores.length
 	private double mean(int first, int last)
 	{
-		//TODO add code here
-		//make this public to test this
-		return 0.0;   // replace this
+		int sum = 0;
+		for(int i = first; i <= last; i++)
+		{
+			sum += scores[i];
+		}
+		return (double)sum/(last-first+1);
 	}
 	
 	// returns true if each successive value in scores is greater than
 	// or equal to the previous value.  Otherwise returns false
 	private boolean showsImprovement()
 	{
-		//TODO add code here
-		return false;  // replace this
+		for(int i=1; i < scores.length; i++)
+		{
+			if(scores[i]<scores[i-1])
+				return false;
+		}
+		return true;
+
 	}
-	
+
 	// if the values in the scores array show improvement, returns the
 	// average of the elements in scores with indexes greater than or
 	// equal to scores.length()/2
 	public double finalGrade()
 	{
-		//TODO add code here
-		return 0.0;  // replace this
+		int len = scores.length;
+		if(showsImprovement())
+		{
+			int index = len/2;
+			return mean(index, len-1);
+		}
+
+		return mean(0, len-1);
 	}
 	public static void main(String[] args) {
 		int [] s1 = {50,50,20,80,53};   // not improved, finalGrade is 50.6
 		int [] s2 = {20,50,50,53,80};   // improved, final grade is 61.0
 		int [] s3 = {20,50,50,85};      // improved, final grade is 67.5
-		int [] s4 = {35, 50, 45, 60,62};  // not improved, finalGrade is 55.67
+		int [] s4 = {35, 50, 45, 60,62};  // not improved, finalGrade is 50.4
 		int [] s5 = {60, 50, 45, 50, 78}; // not improved,  finalGrade is 56.6
 		
 		GradeAverage sr1 = new GradeAverage(s1);
@@ -56,7 +70,7 @@ public class GradeAverage {
 		System.out.println(sr1.showsImprovement());
 		System.out.println(sr1.finalGrade());
 		GradeAverage sr2 = new GradeAverage(s2);
-		System.out.println(sr2.mean(2,5));
+		System.out.println(sr2.mean(2,4));
 		//System.out.println(sr2.showsImprovement());
 		System.out.println(sr2.finalGrade());
 		GradeAverage sr3 = new GradeAverage(s3);
